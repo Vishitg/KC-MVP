@@ -1,0 +1,8 @@
+{
+  "name": "KiranaConnect MVP",
+  "description": "A hyper-local Kirana store platform featuring AI-powered voice ordering, batch delivery scheduling, and a seamless storefront for local communities.",
+  "requestFramePermissions": [
+    "microphone",
+    "geolocation"
+  ]
+}
