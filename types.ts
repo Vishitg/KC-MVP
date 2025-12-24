@@ -4,10 +4,13 @@ export enum Category {
   PERSONAL_CARE = 'Personal Care',
   FASHION = 'Fashion',
   HOUSEHOLD = 'Household',
-  BEAUTY = 'Beauty'
+  BEAUTY = 'Beauty',
+  DAIRY = 'Dairy',
+  SNACKS = 'Snacks'
 }
 
 export enum UserRole {
+  UNSET = 'Unset',
   CUSTOMER = 'Customer',
   STORE_OWNER = 'Store Owner'
 }
@@ -39,6 +42,7 @@ export interface Order {
   status: 'Pending' | 'Confirmed' | 'Out for Delivery' | 'Delivered';
   createdAt: Date;
   estimatedDelivery: string;
+  storeName: string;
   customerName?: string;
   customerAddress?: string;
 }
@@ -47,6 +51,28 @@ export interface Store {
   id: string;
   name: string;
   address: string;
-  radiusKm: number;
-  societiesCovered: string[];
+  rating: number;
+  image: string;
+  deliverySlot: string;
+}
+
+export interface AddressEntry {
+  id: string;
+  label: string; // Home, Work, etc.
+  details: string;
+  isDefault: boolean;
+}
+
+export interface UserProfile {
+  name: string;
+  address: string;
+  phone: string;
+  email: string;
+  addresses?: AddressEntry[];
+}
+
+export interface StoreProfile extends UserProfile {
+  storeName: string;
+  businessType: string;
+  deliverySlots?: string; // New field for custom slots
 }
