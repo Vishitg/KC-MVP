@@ -23,6 +23,10 @@ export interface Product {
   unit: string;
   image: string;
   stock: number;
+  description?: string;
+  manufacturer?: string;
+  expiryDate?: string;
+  mrp?: number;
 }
 
 export interface CartItem extends Product {
