@@ -126,11 +126,32 @@ const App: React.FC = () => {
   };
 
   const handleLogout = () => {
+    // Clear local storage first
     localStorage.clear();
+    
+    // Reset all states to initial values
     setRole(UserRole.UNSET);
     setIsRegistered(false);
     setSelectedStoreId(null);
-    window.location.reload();
+    setCart([]);
+    setMyOrders([]);
+    setActiveTab('Home');
+    setProfileSubTab('Main');
+    setHistoryView('none');
+    setEditingProduct(null);
+    setIsAddingProduct(false);
+    
+    // Reset Profiles
+    setCustomerProfile({ 
+      name: "", address: "", phone: "", email: "", 
+      addresses: [{ id: '1', label: 'Home', details: '', isDefault: true }] 
+    });
+    setStoreProfile({ 
+      name: "", address: "", phone: "", email: "", storeName: "", businessType: "General Store", deliverySlots: "10 AM - 7 PM" 
+    });
+    setStoreInventory([...MOCK_PRODUCTS]);
+    
+    // No window.location.reload() needed. React state update will trigger redirection.
   };
 
   const resetToStart = () => {
@@ -387,7 +408,7 @@ const App: React.FC = () => {
                     )}
                   </div>
                 )}
-                <button onClick={handleLogout} className="w-full bg-red-50 text-red-600 py-6 rounded-[2.5rem] font-black text-[10px] uppercase tracking-widest">Logout Account</button>
+                <button onClick={handleLogout} className="w-full bg-red-50 text-red-600 py-6 rounded-[2.5rem] font-black text-[10px] uppercase tracking-widest active:scale-95 transition-all">Logout Account</button>
               </div>
             )}
           </>
@@ -400,7 +421,6 @@ const App: React.FC = () => {
                       <h2 className="text-3xl font-black tracking-tight">Stock Shelf</h2>
                       <p className="text-xs font-bold text-slate-400 mt-1">Items currently visible to shoppers.</p>
                     </div>
-                    {/* FIXED: Add Product button is now clickable and opens the modal */}
                     <button 
                       onClick={() => setIsAddingProduct(true)}
                       className="bg-indigo-600 text-white px-8 py-4 rounded-3xl font-black text-[10px] uppercase tracking-widest shadow-xl shadow-indigo-100 dark:shadow-none hover:bg-indigo-700 active:scale-95 transition-all"
@@ -447,7 +467,7 @@ const App: React.FC = () => {
                      <div className="w-24 h-24 bg-indigo-600 rounded-[2rem] flex items-center justify-center text-4xl font-black">S</div>
                      <div><h2 className="text-3xl font-black tracking-tight">{storeProfile.storeName || "My Store"}</h2></div>
                    </div>
-                   <button onClick={handleLogout} className="bg-white/10 p-4 rounded-3xl"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 16l4-4m0 0l-4-4m4 4H7" /></svg></button>
+                   <button onClick={handleLogout} className="bg-white/10 p-4 rounded-3xl active:scale-95 transition-all"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 16l4-4m0 0l-4-4m4 4H7" /></svg></button>
                  </div>
                  <div className="flex gap-2 bg-slate-100 dark:bg-slate-800 p-2 rounded-3xl">
                     {['Admin Details', 'Support'].map(tab => (
@@ -477,7 +497,7 @@ const App: React.FC = () => {
                               <div><label className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2 block">Contact</label><p className="text-sm font-black p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl">{customerProfile.phone}</p></div>
                               <div className="md:col-span-2"><label className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2 block">Address</label><p className="text-sm font-black p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl leading-relaxed">{customerProfile.address}</p></div>
                             </div>
-                            <button className="w-full bg-indigo-600 text-white py-5 rounded-3xl font-black text-[10px] uppercase tracking-widest">Edit Account Info</button>
+                            <button className="w-full bg-indigo-600 text-white py-5 rounded-3xl font-black text-[10px] uppercase tracking-widest active:scale-95 transition-all">Edit Account Info</button>
                           </div>
                         </>
                       ) : (
@@ -489,14 +509,14 @@ const App: React.FC = () => {
                           <div className="py-12 text-center opacity-40"><p className="font-black text-sm uppercase tracking-widest">No history yet</p></div>
                         </div>
                       )}
-                      <button onClick={handleLogout} className="w-full bg-red-50 text-red-600 py-5 rounded-3xl font-black text-[10px] uppercase tracking-widest border border-red-100">Sign Out Account</button>
+                      <button onClick={handleLogout} className="w-full bg-red-50 text-red-600 py-5 rounded-3xl font-black text-[10px] uppercase tracking-widest border border-red-100 active:scale-95 transition-all">Sign Out Account</button>
                     </div>
                  )}
                  {profileSubTab === 'Support' && (
                     <div className="bg-white dark:bg-slate-900 p-12 rounded-[4rem] text-center space-y-8 shadow-sm">
                       <div className="w-24 h-24 bg-indigo-50 rounded-full flex items-center justify-center mx-auto text-4xl">🏪</div>
                       <div><h3 className="text-2xl font-black mb-3">Partner Help</h3><p className="text-xs font-bold text-slate-400 max-w-xs mx-auto">Need help with listing or payments? Contact us anytime.</p></div>
-                      <button className="w-full bg-indigo-600 text-white py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest">Contact Manager</button>
+                      <button className="w-full bg-indigo-600 text-white py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest active:scale-95 transition-all">Contact Manager</button>
                     </div>
                  )}
                </div>
