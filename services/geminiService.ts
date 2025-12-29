@@ -6,7 +6,7 @@ export class GeminiService {
   private ai: GoogleGenAI;
 
   constructor() {
-    this.ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    this.ai = new GoogleGenAI({ apiKey: process.env.API_KEY || 'FAKE_API_KEY_FOR_DEVELOPMENT' });
   }
 
   async processChatCommand(
@@ -18,7 +18,7 @@ export class GeminiService {
     responseText: string,
     intentToPay: boolean
   } | null> {
-    const catalogString = catalog.map(p => `${p.id}: ${p.name} (${p.unit}) - ₹${p.price}`).join('\n');
+    const catalogString = catalog.map(p => `${p.id}: ${p.name} (${p.unit}) - â¹${p.price}`).join('\n');
     const historyString = history.map(h => `${h.role.toUpperCase()}: ${h.text}`).join('\n');
     
     const response = await this.ai.models.generateContent({
